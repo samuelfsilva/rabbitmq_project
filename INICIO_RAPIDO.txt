@@ -1,0 +1,120 @@
+═══════════════════════════════════════════════════════════════════
+   🐰 SISTEMA DE MENSAGERIA COM RABBITMQ - INÍCIO RÁPIDO
+═══════════════════════════════════════════════════════════════════
+
+✅ PROJETO COMPLETO E FUNCIONAL!
+
+📁 Localização: /home/ubuntu/rabbitmq_project
+
+═══════════════════════════════════════════════════════════════════
+   🚀 COMO INICIAR (Escolha um dos métodos)
+═══════════════════════════════════════════════════════════════════
+
+MÉTODO 1: Usando o script auxiliar (Recomendado)
+-------------------------------------------------
+cd /home/ubuntu/rabbitmq_project
+./scripts.sh start
+
+
+MÉTODO 2: Usando Docker Compose diretamente
+--------------------------------------------
+cd /home/ubuntu/rabbitmq_project
+docker compose up -d --build
+
+
+═══════════════════════════════════════════════════════════════════
+   📊 ACESSAR RABBITMQ MANAGEMENT UI
+═══════════════════════════════════════════════════════════════════
+
+URL: http://localhost:15672
+
+Credenciais:
+  Usuário: admin
+  Senha: admin123
+
+
+═══════════════════════════════════════════════════════════════════
+   📝 COMANDOS ÚTEIS
+═══════════════════════════════════════════════════════════════════
+
+Ver logs em tempo real:
+  ./scripts.sh logs
+
+Ver logs apenas do Producer:
+  ./scripts.sh logs producer
+
+Ver logs apenas do Subscriber:
+  ./scripts.sh logs subscriber
+
+Ver status dos containers:
+  ./scripts.sh status
+
+Ver estatísticas do banco de dados:
+  ./scripts.sh stats
+
+Parar o sistema:
+  ./scripts.sh stop
+
+Ver todos os comandos disponíveis:
+  ./scripts.sh help
+
+
+═══════════════════════════════════════════════════════════════════
+   📚 DOCUMENTAÇÃO DISPONÍVEL
+═══════════════════════════════════════════════════════════════════
+
+README.md           - Documentação completa do projeto
+QUICKSTART.md       - Guia de início rápido
+ARCHITECTURE.md     - Arquitetura técnica detalhada
+PROJECT_SUMMARY.md  - Resumo do projeto
+example_queries.sql - Exemplos de consultas SQL
+scripts.sh          - Script auxiliar com comandos úteis
+
+
+═══════════════════════════════════════════════════════════════════
+   🎯 O QUE VAI ACONTECER AO INICIAR
+═══════════════════════════════════════════════════════════════════
+
+1. ✅ RabbitMQ será iniciado na porta 5672
+2. ✅ Management UI estará disponível na porta 15672
+3. ✅ Producer começará a enviar mensagens a cada 5 segundos
+4. ✅ Subscriber consumirá mensagens e salvará no SQLite
+5. ✅ Banco de dados será criado em data/subscriber/alerts.db
+
+
+═══════════════════════════════════════════════════════════════════
+   💡 DICA PRO
+═══════════════════════════════════════════════════════════════════
+
+Após iniciar, abra 3 terminais:
+
+Terminal 1: Ver logs do Producer
+  docker compose logs -f producer
+
+Terminal 2: Ver logs do Subscriber
+  docker compose logs -f subscriber
+
+Terminal 3: Acessar Management UI
+  Abra http://localhost:15672 no navegador
+
+
+═══════════════════════════════════════════════════════════════════
+   ⚠️ PRÉ-REQUISITOS
+═══════════════════════════════════════════════════════════════════
+
+Certifique-se de ter instalado:
+  ✅ Docker (versão 20.10+)
+  ✅ Docker Compose (versão 1.29+ ou Docker Compose V2)
+
+
+═══════════════════════════════════════════════════════════════════
+   🎉 PRONTO PARA COMEÇAR!
+═══════════════════════════════════════════════════════════════════
+
+Execute:
+  cd /home/ubuntu/rabbitmq_project && ./scripts.sh start
+
+Ou leia a documentação completa:
+  cat README.md
+
+Boa sorte! 🚀

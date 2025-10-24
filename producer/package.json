@@ -1,0 +1,7 @@
+{
+  "name": "producer",
+  "packageManager": "yarn@4.9.4",
+  "dependencies": {
+    "amqplib": "^0.10.9"
+  }
+}
