@@ -1,0 +1,70 @@
+name: Code Quality and Security Scan
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  schedule:
+    # A schedule é opcional, mas recomendada para escaneamento regular
+    # Roda toda segunda-feira à 1:00 AM UTC
+    - cron: '0 1 * * 1'
+
+jobs:
+  # Job 1: Escaneamento de Qualidade e Vulnerabilidades (CodeQL)
+  codeql:
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write # Permissão necessária para o CodeQL enviar os resultados
+      actions: read
+      contents: read
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        # O CodeQL precisa do histórico completo para uma análise precisa
+        fetch-depth: 0 
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        # Pode especificar as linguagens do seu projeto (ex: 'javascript', 'python')
+        languages: 'javascript' # Substitua pelas linguagens do seu projeto
+        
+    - name: Autobuild (apenas se seu projeto precisar de compilação)
+      # Tenta compilar o código. Para linguagens interpretadas, pode ser ignorado.
+      uses: github/codeql-action/autobuild@v3
+      
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+
+  # Job 2: Escaneamento de Segredos em Pull Requests
+  secret-scan:
+    # Este job só precisa rodar em Pull Requests
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      # Garante que o PR head (as mudanças propostas) seja checado
+      with:
+        ref: ${{ github.event.pull_request.head.ref }}
+        repository: ${{ github.event.pull_request.head.repo.full_name }}
+
+    - name: Run Gitleaks Secret Scanner
+      # Gitleaks é uma ferramenta popular e eficiente para este fim
+      uses: zricethezav/gitleaks-action@v2
+      # Os argumentos 'pull-request' e 'full-scan=false' garantem que apenas as
+      # mudanças do PR sejam escaneadas, o que é mais rápido e seguro.
+      with:
+        config: .gitleaks.toml # Opcional: use um arquivo de configuração customizado
+        
+        # Define o nível de severidade para falhar o workflow (pode ser 'error')
+        # Se um segredo for encontrado, o PR não poderá ser mergeado.
+        fail: true
