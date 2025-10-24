@@ -44,7 +44,7 @@ jobs:
   # Job 2: Escaneamento de Segredos em Pull Requests
   secret-scan:
     # Este job só precisa rodar em Pull Requests
-    # comentadoif: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       contents: read
